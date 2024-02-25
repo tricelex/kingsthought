@@ -1,10 +1,10 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import auth, User
 from django.shortcuts import render, redirect
-from lynx.forms import CreateUserForm, LoginForm
-from lynx.models import Profile
 
-from django.contrib.auth.models import auth
-from django.contrib.auth import authenticate, login, logout
+from lynx.forms import CreateUserForm, LoginForm, UpdateUserForm, UpdateProfileForm
+from lynx.models import Profile
 
 
 # Create your views here.
@@ -14,7 +14,9 @@ def index(request):
 
 @login_required(login_url='login')
 def dashboard(request):
-    return render(request, 'lynx/dashboard.html')
+    profile = Profile.objects.get(user=request.user)
+    context = {'profile': profile}
+    return render(request, 'lynx/dashboard.html', context)
 
 
 def register(request):
@@ -41,7 +43,7 @@ def login(request):
             user = authenticate(request, username=username, password=password)
             print(user)
             if user is not None:
-                auth.login(request, user )
+                auth.login(request, user)
                 return redirect('dashboard')
 
     context = {'form': form}
@@ -50,9 +52,35 @@ def login(request):
 
 @login_required(login_url='login')
 def profile(request):
-    return render(request, 'lynx/profile-management.html')
+    form = UpdateUserForm(instance=request.user)
+
+    profile = Profile.objects.get(user=request.user)
+    profile_form = UpdateProfileForm(instance=profile)
+
+    if request.method == 'POST':
+        form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('dashboard')
+
+    context = {'form': form, 'profile_form': profile_form}
+    return render(request, 'lynx/profile-management.html', context)
 
 
 def logout(request):
     auth.logout(request)
     return redirect('index')
+
+
+@login_required(login_url='login')
+def delete_account(request):
+    if request.method == 'POST':
+        delete_user = request.user
+        delete_user.delete()
+        return redirect('index')
+    return render(request, 'lynx/delete-account.html')

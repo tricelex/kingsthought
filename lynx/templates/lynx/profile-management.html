@@ -1,6 +1,64 @@
 {% extends 'lynx/base.html' %}
+{% load crispy_forms_filters %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block title %}profile{% endblock %}
 {% block content %}
-    <h1>Profile</h1>
+    <div class="container bg-white shadow-md p-5 form-layout">
+
+        <h1> Profile Management </h1>
+
+        <br>
+
+        <form method="POST" autocomplete="off">
+
+            {% csrf_token %}
+
+            {{ form.username|as_crispy_field }}
+
+            <br>
+
+            {{ form.email|as_crispy_field }}
+
+            <br>
+
+            <input class="btn btn-primary w-100" type="submit" value="Submit"/>
+
+            <br>
+
+
+        </form>
+
+        <br>
+
+        <p> Don't have an account? </p> <a href="{% url 'register' %}"> Create my account </a> </p>
+
+
+    </div>
+
+    <br>
+    <div class="container bg-white shadow-md p-5 form-layout">
+        <h3>Upload your profile picture </h3>
+
+        <form method="POST" autocomplete="off" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ profile_form.profile_pic|as_crispy_field }}
+            <br>
+            <br>
+            <input class="btn btn-primary" type="submit" value="submit">
+
+        </form>
+
+        <a href="{% url 'delete_account' %}"> Delete my account </a> </p>
+    </div>
+
+    <br>
+    <div class="container bg-white shadow-md p-5 form-layout">
+
+        <a href="{% url 'delete_account' %}"> Delete my account </a> </p>
+    </div>
+
+
 {% endblock %}
+
+

@@ -4,7 +4,11 @@
 {% block content %}
     <div class="text-center">
         <h1>KingsThought Dashboard</h1>
-        <p class="lead">A place where you can share your thoughts and ideas with the world</p>
-        <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a><h2></h2>
+        <h2>Welcome {{ user.username }}</h2>
+        <img style="width: 100px" src="{{ profile.profile_pic.url }}" alt="KingsThought" class="img-fluid">
+        <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+        <h2></h2>
+        <a class="btn btn-primary" href="{% url 'profile' %}">Profile Management</a>
+        <h2></h2>
     </div>
 {% endblock %}
