@@ -2,5 +2,9 @@
 {% load static %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-    <h1>Dashboard</h1>
+    <div class="text-center">
+        <h1>KingsThought Dashboard</h1>
+        <p class="lead">A place where you can share your thoughts and ideas with the world</p>
+        <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a><h2></h2>
+    </div>
 {% endblock %}

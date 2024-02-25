@@ -2,29 +2,10 @@
 {% load static %}
 {% block title %}Homepage{% endblock %}
 {% block content %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">KingsThought</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary navbar-btn" href="#">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary navbar-btn" href="#">Login</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <br>
-    <br>
     <div class="text-center">
         <h1>Welcome to KingsThought</h1>
         <p class="lead">A place where you can share your thoughts and ideas with the world</p>
-        <a class="btn btn-primary" href="#">Learn More</a><h2></h2>
+        <a class="btn btn-primary" href="{% url 'register' %}">Register Here</a><h2></h2>
     </div>
 
 {% endblock %}
